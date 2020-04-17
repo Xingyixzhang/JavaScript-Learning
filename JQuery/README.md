@@ -5,8 +5,14 @@
 but **BEFORE** all images have loaded.
 ```javascript
 <script type="text/javascript">
+    // Window.onload:
+    Window.onload = function() {
+        alert('Window loaded');
+    };
+    // jQuery.ready: -- display before window.onload.
     $(document).ready(function(){   // Inline Anonymous function
         // Perform Actions here
+        aleart('DOM loaded');
     });
 </script>
 ```
