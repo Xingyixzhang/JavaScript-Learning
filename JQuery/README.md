@@ -144,7 +144,136 @@ $('input[value*="Events"]')     // selects any input element whose value attribu
 <input type="button" value="National Events 2020" />
 <input type="button" value="Local Events 2020" />
 ```
-#### Useful Link: [jQuery Selectors (Interactive Experiment with Selectors](http://codylindley.com/jqueryselectors/)
+#### Useful Link: [jQuery Selectors (Interactive Experiment with Selectors)](http://codylindley.com/jqueryselectors/)
 ## Interact with the DOM
+#### Iterate through nodes 
+```javascript
+$('div').each(function(index){
+    alert(index + '=' + $(this).text());
+});
+// You can also do the following but the above is better.
+$('div').each(function(index, elem){
+    alert(index + '=' + $(elem).text());    // elem == this.
+});
+
+// var output = $('#OutputDiv');
+var html = "";
+$('div.BlueDiv, div.RedDiv').each(function (index){
+    // $('#OutputDiv');     better practice to have output variable first since each time called will look at whole doc to find the id tag.
+    // output.html(output.html() + "<br />" + index + " " + $(this).text());
+    html += "<br />" + index + " " + $(this).text();
+});
+var output = $('#OutputDiv');
+output.html(html);
+```
+#### Modify DOM Object Properties and Attributes
+```javascript
+// this: raw DOM object without jQuery wrapper for the access of jQuery APIs.
+$('div').each(function(i) {
+    this.title = "My index = " + i; // title is the DOM object Property.
+});
+
+
+// .attr(): access object attributes
+var val = $('#CustomerDiv').attr('title');  // Retrieves the value of the title attribute.
+
+
+// .attr(attributeName, valueToSet): Access the object's attribute and modify the value.
+$('img').attr('title', 'My Image Title');
+
+
+// Modify multi attributes, by passing a JSON object containing name/value pairs:
+$('img').attr({                         // { ..:..., ..:..., ..:... } JSON anonymous object
+    title: 'My Image Title',
+    style: 'border: 2px solid black;'
+});
+
+
+// Chaining, instead of seperately calling which iterate through objects multi times:
+$('div.BlueDiv, div.RedDiv')
+    .attr(
+        { 
+            title: 'My Image Title',
+            style: 'border: 2px solid black;'   // jQuery: css ~ JSON: style.
+        }
+    )
+    .css('background-color', 'yellow')
+    .css('color', 'black')
+    .css('font-size', '20px')
+```
+#### Add/Remove Nodes
+- Key methods handling **Inserting** nodes into elements: (*Saves time since no need to do through the doc*)
+1. **.append()**
+2. **.appendTo()**
+```javascript
+// Append: adds children at the END of the matching element.
+
+// To add (office) into each .officePhone class element:
+$('<span>(office)</span>').appendTo('.officePhone');
+// =========================== OR =========================
+$('.officePhone').append('<span>(office)</span>');
+```
+3. **.prepend()**
+4. **prependTo()**
+```javascript
+// Prepend: adds children at the BEGINNING of the matching element.
+
+// To add (office) into each .officePhone class element:
+$('<span>(office)</span>').prependTo('.officePhone');
+// =========================== OR =========================
+$('.officePhone').prepend('<span>(office)</span>');
+```
+- Wrapping elements: **.wrap()**
+```javascript
+<div class="state">Arizona</div>
+
+$('.state').wrap('<div class="US_State" />');
+
+// RESULT:
+<div class="US_State">
+    <div class="state">Arizona</div>
+</div>
+```
+- To remove nodes from the DOM: **.remove()**
+```$('.phone, .location').remove();```: remove Objects with .phone/.location classes from the DOM.
+#### Modify Styles and Classes
+```javascript
+// Chaining 3 functions, Change the Styles:
+$('div.BlueDiv, div.RedDiv')
+    .attr(
+        { 
+            title: 'My Image Title',
+            style: 'border: 2px solid black;'   // jQuery: css ~ JSON: style.
+        }
+    )
+    .css({
+        'background-color': 'yellow',
+        'color': 'black',
+        'font-size': '20px'
+    }).text('Changed Color');
+    
+/* Key methods for working with CSS class attributes: 
+ *      .addClass() -- add >=1 class names to the class attribute of each matching element.
+ *      .hasClass()
+ *      .removeClass() -- remove >=1 classes.
+ *      .toggleClass() -- if exist, remove it; if not exist, add it.
+ */
+ 
+ $('p').addClass('classOne');
+ $('p').addClass('classOne classTwo');
+ 
+ if ($('p').hasClass('styleSpecific');){
+    // Perform work.
+ }
+ 
+ $('p').removeClass();  // remove all classes.
+ $('p').removeClass('classOne');
+ $('p').removeClass('classOne classTwo');
+ 
+ <style type="text/css">
+    .highlight { background: yellow; }
+ </style>
+ $('#PhoneDetails').toggleClass('highlight');
+```
 ## Handle Events
 ## Work with AJAX Features
