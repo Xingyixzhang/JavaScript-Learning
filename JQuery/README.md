@@ -274,6 +274,91 @@ $('div.BlueDiv, div.RedDiv')
     .highlight { background: yellow; }
  </style>
  $('#PhoneDetails').toggleClass('highlight');
+ 
+ // in <script>:
+ function FocusBlur(textBox) {
+    $(textBox).toggleClass('highlight');
+ }
+ // in html <input>:
+ <input id="FirstTextBox" onfocus="FocusBlur(this)" onblur="FocusBlur(this)" type="text" />
+ <input id="SecondTextBox" onfocus="FocusBlur(this)" onblur="FocusBlur(this)" type="text" />
 ```
 ## Handle Events
+- [jQuery Event Doc](https://api.jquery.com/category/events/)
+```javascript
+<script type="text/javascript">
+
+    // Handle event the old-fashion way using javascript:
+    var button = document.getElementById('SubmitButton');
+    if (document.addEventListener){ // Most browser syntax:
+        button.addEventListener('click', function() { alert('Clicked Button'); }, false);
+    }
+    else{   // Internet Explorer handles it differently:
+        button.attachEvent('onclick', function() { alert('Clicked IE Button'); });
+    }
+    
+    // .click(handler(eventObject))
+    $('#myID').click(function() {
+        alert('The element myID was clicked');
+        
+        // Raise a click event:
+        $('#otherID').click(function() {
+            $('#myID').click(); 
+        });
+    });
+</script>
+```
+1. Click Event
+```javascript
+<script type="text/javascript">
+    $(document).ready(function () {
+        WireEvents();
+        // More functions...
+    });
+    
+    function WireEvents() {
+        $('#SubmitButton').click(function () {
+            alert('Button Clicked.');
+            
+            var fnval = $('#FirstNameTextBox').val();
+            var lnval = $('#LastNameTextBox').val();
+            $('#DivOutput').text(fnval + ' ' + lnval);
+        });
+        
+        // 2. Change Event. Handle Select.
+        
+        // 3. Mouse Events.
+    }
+</script>
+```
+2. Change Event
+```javascript
+$('#StateSelect').change(function() {
+    alert($(this).val());
+});
+
+// ======================= OR ===================
+// Note that the myInputs class can be attached to div, select, textarea, text...
+
+$('.myInputs').change(function() {
+    alert($(this).val());
+    $(this).addClass('highlight');
+});
+```
+3. Mouse Events
+```javascript
+
+```
+4. Binding to Events
+```javascript
+
+```
+5. **live()**, **delegate()**, and **on()**
+```javascript
+
+```
+6. Hover Events
+```javascript
+
+```
 ## Work with AJAX Features
