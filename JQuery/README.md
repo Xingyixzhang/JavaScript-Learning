@@ -391,11 +391,63 @@ $('#test').off('click');
 ```
 - Useful website: [jQuery Source Viewer](https://j11y.io/jquery/)
 5. **live()**, **delegate()**, and **on()**
+- **delegate()** is a newer version of **live()** added in jQuery 1.4, works even when new objects are added into the DOM.
+- **undelegate()**: to stop delegate event handling.
 ```javascript
+$('#Divs').delegate('.someClass', 'click', func() {
+    // any child of #Divs that's .someClass will bubble up to #Divs (NOT all the way up to DOM) ... when clicked.
+});
+```
+- The **on()** function is a new replacement for: **bind(), delegate(), live()**, works when new objs are added into the DOM.
+```javascript
+// instead of $('tr').on('click'..., use the parent and let the event bubble up. more efficient.
 
+$("#MyTable tr") tbody").on("click", "tr", function(event) {
+    alert('Row was clicked and bubbled up');
+});
+
+// Read: find the obj with MyTable id, in its tbody, on the click of tr, invoke the function...
+```
+- Using **on()** with a *map*:
+```javascript
+$("#MyTable tr").on({
+    mouseenter: function() {
+        $(this).addClass("over");
+    },
+    mouseleave: function() {
+        $(this).addClass("out");
+    }
+});
 ```
 6. Hover Events
+- **$(selector).hover(handlerIn, handlerOut)**
+- **handlerIn** = *mouseenter*; **handlerOut** = *mouseleave*.
 ```javascript
+$('#target').hover(
+// mouseenter highlights the target :
+    function(){
+        $(this).css('background-color', '#00FF99');
+    },
+// mouseleave set it back to white :
+    function(){
+        $(this).css('background-color', '#FFFFFF');
+    }
+);
 
+// Another option: $(selector).hover(handlerInOut):
+$('p').hover(function() {
+    $(this).toggleClass('over');
+});
 ```
 ## Work with AJAX Features
+- AJAX is a way to update parts of the page without reloading the whole page.
+#### jQuery AJAX Functions
+- jQuery allows Ajax requests to be made from a page:
+1. Allow parts of a page to be updated
+2. Cross-Browser Support
+3. Simple API
+4. Get & POST supported
+5. Load JSON, XML, HTML or even scripts
+#### Loading HTML Content from the server
+#### Make GET/ POST Requests
+#### Intro to the ajax() function
