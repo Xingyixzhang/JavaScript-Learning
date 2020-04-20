@@ -347,12 +347,49 @@ $('.myInputs').change(function() {
 ```
 3. Mouse Events
 ```javascript
+$('#myDiv, tr').mouseenter(function () {
+    Toggle($(this));    // Toggle(this);
+    $(this).css('cursor', 'pointer');
+})
+.mouseleave(function () {
+    // $(this).toggleClass('highlight');
+    Toggle(this);
+})
+.mouseup(function (e) {
+    alert($(e.target).attr('id'));
+    $(this).text('X: ' + e.pageX + ' Y: ' + e.pageY);
+});
 
+function Toggle(div){
+    $(div).toggleClass('highlight');
+}
 ```
 4. Binding to Events
+- **.on(eventType, handler(event object))**: attaches a handler to an event for the selected element(s).
+- **.off(event)**: remove a handler previously bounded to an element.
 ```javascript
+$('#MyDiv').on('click', function () {
+    // Handle the event here...
+});
 
+// .on() allows multi events to be bound to >=1 elements:
+$('#MyDiv').on('mouseenter mouseleave mouseup', function () {
+    $(this).toggleClass('highlight');
+    $(this).css('cursor', 'pointer');
+    
+    // For only mouseup:
+    if (e.type == 'mouseup'){
+        $(this).text('X: ' + e.pageX + ' Y: ' + e.pageY);
+    }
+});
+
+// to unbound $('#test').click(handler); : 
+$('#test').off();
+
+// To specify targeted event:
+$('#test').off('click');
 ```
+- Useful website: [jQuery Source Viewer](https://j11y.io/jquery/)
 5. **live()**, **delegate()**, and **on()**
 ```javascript
 
