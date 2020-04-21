@@ -448,6 +448,35 @@ $('p').hover(function() {
 3. Simple API
 4. Get & POST supported
 5. Load JSON, XML, HTML or even scripts
+```javascript
+$(selector).load()      // loads html data from the server.
+$.get() and $.post()    // get raw data from the server.
+$.getJSON()             // Get/Post and Return JSON.
+$.ajax()                // Provides core functionality.
+```
 #### Loading HTML Content from the server
-#### Make GET/ POST Requests
+- **$(selector).load(url, data, callback)**: load html content from a server and add it into a DOM object.
+```javascript
+$(document).ready(function() {
+    $('#HelpButton').click(function() {
+        // $('#MyDiv').load('HelpDetails.html');
+        $('#MyDiv').load('HelpDetails.html #MainTOC');  // add a selector to filter the content.
+        
+        $('#MyDiv').load('GetCustomers.aspx', {PageSize: 25});
+        
+        $('#outputDiv').load('NotFound.html', function (response, status, xhr) {
+            if (status == "error"){
+                alert(xhr.statusText);
+            }
+        });
+    });
+});
+```
+#### Make GET/ POST Requests (global functions)
+- **$.get(url, data, callback, datatype)**: retrieve data from a server.
+```javascript
+$.get('HelpDetails.html', function (data) {
+    $('#outputDiv').html(data);
+});
+```
 #### Intro to the ajax() function
